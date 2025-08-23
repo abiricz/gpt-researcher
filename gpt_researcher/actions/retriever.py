@@ -65,6 +65,11 @@ def get_retriever(retriever: str):
             from gpt_researcher.retrievers import MCPRetriever
 
             return MCPRetriever
+        
+        case "brave":
+            from gpt_researcher.retrievers import BraveSearch
+            
+            return BraveSearch
 
         case _:
             return None

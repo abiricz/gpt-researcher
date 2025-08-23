@@ -68,7 +68,8 @@ VALID_RETRIEVERS = [
     "pubmed_central",
     "exa",
     "mcp",
-    "mock"
+    "mock",
+    "brave"
 ]
 
 def get_all_retriever_names():

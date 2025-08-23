@@ -13,6 +13,9 @@ from .tavily.tavily_search import TavilySearch
 from .exa.exa import ExaSearch
 from .mcp import MCPRetriever
 
+# added:
+from .brave.brave import BraveSearch
+
 __all__ = [
     "TavilySearch",
     "CustomRetriever",
@@ -27,5 +30,6 @@ __all__ = [
     "SemanticScholarSearch",
     "PubMedCentralSearch",
     "ExaSearch",
-    "MCPRetriever"
+    "MCPRetriever",
+    "BraveSearch"
 ]
