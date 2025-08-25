@@ -44,6 +44,11 @@ class Config:
                 value = self.convert_env_value(key, env_value, BaseConfig.__annotations__[key])
             setattr(self, key.lower(), value)
 
+        # Allow REPORT_LANGUAGE environment variable to override LANGUAGE
+        report_lang = os.getenv("REPORT_LANGUAGE")
+        if report_lang:
+            self.language = report_lang
+
         # Handle RETRIEVER with default value
         retriever_env = os.environ.get("RETRIEVER", config.get("RETRIEVER", "tavily"))
         try:

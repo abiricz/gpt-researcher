@@ -56,7 +56,7 @@ Below is a list of current supported options:
 - **`FAST_LLM`**: Model name for fast LLM operations such summaries. Defaults to `openai:gpt-4o-mini`.
 - **`SMART_LLM`**: Model name for smart operations like generating research reports and reasoning. Defaults to `openai:gpt-5`.
 - **`STRATEGIC_LLM`**: Model name for strategic operations like generating research plans and strategies. Defaults to `openai:gpt-5-mini`.
-- **`LANGUAGE`**: Language to be used for the final research report. Defaults to `english`.
+- **`LANGUAGE`**: Language to be used for the final research report. Defaults to `english`. Can be overridden by setting `REPORT_LANGUAGE` in your environment or `.env` file.
 - **`CURATE_SOURCES`**: Whether to curate sources for research. This step adds an LLM run which may increase costs and total run time but improves quality of source selection. Defaults to `False`.
 - **`FAST_TOKEN_LIMIT`**: Maximum token limit for fast LLM responses. Defaults to `2000`.
 - **`SMART_TOKEN_LIMIT`**: Maximum token limit for smart LLM responses. Defaults to `4000`.
