@@ -1,3 +1,4 @@
+import os
 import warnings
 from datetime import date, datetime, timezone
 
@@ -170,13 +171,15 @@ The response should contain ONLY the list.
         report_format="apa",
         total_words=1000,
         tone=None,
-        language="english",
+        language: str | None = None,
     ):
         """Generates the report prompt for the given question and research summary.
         Args: question (str): The question to generate the report prompt for
                 research_summary (str): The research summary to generate the report prompt for
         Returns: str: The report prompt for the given question and research summary
         """
+
+        language = language or os.getenv("REPORT_LANGUAGE") or os.getenv("LANGUAGE") or "english"
 
         reference_prompt = ""
         if report_source == ReportSource.Web.value:
@@ -255,7 +258,13 @@ The response MUST not contain any markdown format or additional text (like ```js
 
     @staticmethod
     def generate_resource_report_prompt(
-        question, context, report_source: str, report_format="apa", tone=None, total_words=1000, language="english"
+        question,
+        context,
+        report_source: str,
+        report_format="apa",
+        tone=None,
+        total_words=1000,
+        language: str | None = None,
     ):
         """Generates the resource report prompt for the given question and research summary.
 
@@ -266,6 +275,8 @@ The response MUST not contain any markdown format or additional text (like ```js
         Returns:
             str: The resource report prompt for the given question and research summary.
         """
+
+        language = language or os.getenv("REPORT_LANGUAGE") or os.getenv("LANGUAGE") or "english"
 
         reference_prompt = ""
         if report_source == ReportSource.Web.value:
@@ -295,19 +306,34 @@ The response MUST not contain any markdown format or additional text (like ```js
 
     @staticmethod
     def generate_custom_report_prompt(
-        query_prompt, context, report_source: str, report_format="apa", tone=None, total_words=1000, language: str = "english"
+        query_prompt,
+        context,
+        report_source: str,
+        report_format="apa",
+        tone=None,
+        total_words=1000,
+        language: str | None = None,
     ):
+        _ = language or os.getenv("REPORT_LANGUAGE") or os.getenv("LANGUAGE") or "english"
         return f'"{context}"\n\n{query_prompt}'
 
     @staticmethod
     def generate_outline_report_prompt(
-        question, context, report_source: str, report_format="apa", tone=None,  total_words=1000, language: str = "english"
+        question,
+        context,
+        report_source: str,
+        report_format="apa",
+        tone=None,
+        total_words=1000,
+        language: str | None = None,
     ):
         """Generates the outline report prompt for the given question and research summary.
         Args: question (str): The question to generate the outline report prompt for
                 research_summary (str): The research summary to generate the outline report prompt for
         Returns: str: The outline report prompt for the given question and research summary
         """
+
+        language = language or os.getenv("REPORT_LANGUAGE") or os.getenv("LANGUAGE") or "english"
 
         return (
             f'"""{context}""" Using the above information, generate an outline for a research report in Markdown syntax'
@@ -326,7 +352,7 @@ The response MUST not contain any markdown format or additional text (like ```js
         report_format="apa",
         tone=None,
         total_words=2000,
-        language: str = "english"
+        language: str | None = None,
     ):
         """Generates the deep research report prompt, specialized for handling hierarchical research results.
         Args:
@@ -340,6 +366,8 @@ The response MUST not contain any markdown format or additional text (like ```js
         Returns:
             str: The deep research report prompt
         """
+        language = language or os.getenv("REPORT_LANGUAGE") or os.getenv("LANGUAGE") or "english"
+
         reference_prompt = ""
         if report_source == ReportSource.Web.value:
             reference_prompt = f"""
@@ -484,8 +512,9 @@ and research data:
         max_subsections=5,
         total_words=800,
         tone: Tone = Tone.Objective,
-        language: str = "english",
+        language: str | None = None,
     ) -> str:
+        language = language or os.getenv("REPORT_LANGUAGE") or os.getenv("LANGUAGE") or "english"
         return f"""
 Context:
 "{context}"
@@ -585,7 +614,13 @@ Provide the draft headers in a list format using markdown syntax, for example:
 """
 
     @staticmethod
-    def generate_report_introduction(question: str, research_summary: str = "", language: str = "english", report_format: str = "apa") -> str:
+    def generate_report_introduction(
+        question: str,
+        research_summary: str = "",
+        language: str | None = None,
+        report_format: str = "apa",
+    ) -> str:
+        language = language or os.getenv("REPORT_LANGUAGE") or os.getenv("LANGUAGE") or "english"
         return f"""{research_summary}\n
 Using the above latest information, Prepare a detailed report introduction on the topic -- {question}.
 - The introduction should be succinct, well-structured, informative with markdown syntax.
@@ -598,7 +633,12 @@ Assume that the current date is {datetime.now(timezone.utc).strftime('%B %d, %Y'
 
 
     @staticmethod
-    def generate_report_conclusion(query: str, report_content: str, language: str = "english", report_format: str = "apa") -> str:
+    def generate_report_conclusion(
+        query: str,
+        report_content: str,
+        language: str | None = None,
+        report_format: str = "apa",
+    ) -> str:
         """
         Generate a concise conclusion summarizing the main findings and implications of a research report.
 
@@ -610,6 +650,7 @@ Assume that the current date is {datetime.now(timezone.utc).strftime('%B %d, %Y'
         Returns:
             str: A concise conclusion summarizing the report's main findings and implications.
         """
+        language = language or os.getenv("REPORT_LANGUAGE") or os.getenv("LANGUAGE") or "english"
         prompt = f"""
     Based on the research report below and research task, please write a concise conclusion that summarizes the main findings and their implications:
 
@@ -725,7 +766,7 @@ PROMPT_GENERATOR = Callable[
         str,        # report_format
         str | None, # tone
         int,        # total_words
-        str,        # language
+        str | None, # language
     ],
     str,
 ]
